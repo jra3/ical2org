@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"github.com/rjhorniii/ics-golang"
+	"github.com/jra3/ics-golang"
 	"log"
 	"os"
 	"regexp"
