@@ -1,24 +1,21 @@
 package main
 
 import (
-	// "fmt"
 	"io/ioutil"
 	"os"
-	// "github.com/rjhorniii/ics-golang"
-	//	"github.com/davecgh/go-spew/spew"
 	"testing"
-	//"github.com/davecgh/go-spew/spew"
+	"github.com/davecgh/go-spew/spew"
 )
 
 func TestMultiple(t *testing.T) {
-	a := args{outfile: "tests/xx91596.org", count: true, args: []string{"tests/xx91596.ics", "tests/test-vcal-3.vcs", "tests/wg-29.ics"}}
+	a := args{outfile: "tests/xx91596.org.1", count: true, args: []string{"tests/xx91596.ics", "tests/test-vcal-3.vcs", "tests/wg-29.ics"}}
 
 	process(a)
 	// order is unpredicatable so no comparison
 }
 
 func TestX91596(t *testing.T) {
-	a := args{outfile: "tests/xx91596.org", args: []string{"tests/xx91596.ics"}}
+	a := args{outfile: "tests/xx91596.org.2", args: []string{"tests/xx91596.ics"}}
 
 	process(a)
 	// compare with org-correct output
@@ -27,7 +24,7 @@ func TestX91596(t *testing.T) {
 	}
 }
 func TestDeadline(t *testing.T) {
-	a := args{outfile: "tests/xx91596.org", dead: true, args: []string{"tests/xx91596.ics"}}
+	a := args{outfile: "tests/xx91596.org.3", dead: true, args: []string{"tests/xx91596.ics"}}
 
 	process(a)
 	// compare with org-dead
@@ -36,7 +33,7 @@ func TestDeadline(t *testing.T) {
 	}
 }
 func TestSchedule(t *testing.T) {
-	a := args{outfile: "tests/xx91596.org", sched: true, args: []string{"tests/xx91596.ics"}}
+	a := args{outfile: "tests/xx91596.org.4", sched: true, args: []string{"tests/xx91596.ics"}}
 
 	process(a)
 	// compare with org-scheduled
@@ -45,7 +42,7 @@ func TestSchedule(t *testing.T) {
 	}
 }
 func TestActive(t *testing.T) {
-	a := args{outfile: "tests/xx91596.org", active: true, args: []string{"tests/xx91596.ics"}}
+	a := args{outfile: "tests/xx91596.org.5", active: true, args: []string{"tests/xx91596.ics"}}
 
 	process(a)
 	// compare with org-correct
@@ -55,7 +52,7 @@ func TestActive(t *testing.T) {
 }
 
 func TestInactive(t *testing.T) {
-	a := args{outfile: "tests/xx91596.org", inactive: true, args: []string{"tests/xx91596.ics"}}
+	a := args{outfile: "tests/xx91596.org.6", inactive: true, args: []string{"tests/xx91596.ics"}}
 
 	process(a)
 	// compare with org-inactive
@@ -65,7 +62,7 @@ func TestInactive(t *testing.T) {
 }
 
 func TestDupflag(t *testing.T) {
-	a := args{outfile: "tests/xx91596.org", dupflag: true, args: []string{"tests/xx91596.ics", "tests/xx91596a.ics"}}
+	a := args{outfile: "tests/xx91596.org.7", dupflag: true, args: []string{"tests/xx91596.ics", "tests/xx91596a.ics"}}
 
 	process(a)
 	// compare with org-correct
@@ -75,7 +72,7 @@ func TestDupflag(t *testing.T) {
 }
 
 func TestDual(t *testing.T) {
-	a := args{outfile: "tests/xx91596.org", count: true, args: []string{"tests/xx91596.ics", "tests/xx91596a.ics"}}
+	a := args{outfile: "tests/xx91596.org.8", count: true, args: []string{"tests/xx91596.ics", "tests/xx91596a.ics"}}
 
 	process(a)
 	// compare with org-dual
@@ -85,7 +82,7 @@ func TestDual(t *testing.T) {
 }
 
 func TestAfterDate(t *testing.T) {
-	a := args{outfile: "tests/xx91596.org", afterfile: "2030-01-01", args: []string{"tests/xx91596.ics"}}
+	a := args{outfile: "tests/xx91596.org.9", afterfile: "2030-01-01", args: []string{"tests/xx91596.ics"}}
 
 	process(a)
 	// compare with empty
@@ -99,7 +96,7 @@ func TestAfterDate(t *testing.T) {
 }
 func TestAfterDuration(t *testing.T) {
 	// remove tests/xx91596.org
-	a := args{appfile: "tests/xx91596.org", afterfile: "-36h", args: []string{"tests/xx91596.ics"}}
+	a := args{appfile: "tests/xx91596.org.10", afterfile: "-36h", args: []string{"tests/xx91596.ics"}}
 	err := os.Remove(a.appfile)
 	if !os.IsNotExist(err) && err != nil {
 		t.Error(err)
@@ -117,7 +114,7 @@ func TestAfterDuration(t *testing.T) {
 }
 
 func TestLabel(t *testing.T) {
-	a := args{outfile: "tests/xx91596.org", label: "test-label", args: []string{"tests/xx91596.ics"}}
+	a := args{outfile: "tests/xx91596.org.12", label: "test-label", args: []string{"tests/xx91596.ics"}}
 
 	process(a)
 	// compare with org-inactive
@@ -148,7 +145,7 @@ func compareFiles(fname1 string, fname2 string, t *testing.T) bool {
 	str2 := string(f2)
 
 	if str1 != str2 {
-		//		spew.Printf("test file: %v \n\ncomparison file %v\n", str1, str2)
+		spew.Printf("test file: %v \n\ncomparison file %v\n", str1, str2)
 		return false
 	}
 	return true
