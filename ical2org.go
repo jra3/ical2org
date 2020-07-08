@@ -23,6 +23,7 @@ type args struct {
 	active    bool
 	inactive  bool
 	repeats   bool
+	maxrepeats int
 	dead      bool
 	count     bool
 	after     bool
@@ -49,6 +50,7 @@ func main() {
 	flag.BoolVar(&a.active, "active", true, "Headline timestamp should be active")
 	flag.BoolVar(&a.inactive, "inactive", false, "Headline timestamp should be inactive")
 	flag.BoolVar(&a.repeats, "repeats", true, "Generate an event per repeat")
+	flag.IntVar(&a.maxrepeats, "max-repeats", 500, "Stop repeating after N instances max")
 	flag.BoolVar(&a.dupflag, "dupinput", false, "Do not generate duplicates from input")
 	flag.BoolVar(&a.count, "count", false, "Report number of new events found on stdout")
 
@@ -103,6 +105,7 @@ func process(a args) {
 		os.Exit(1)
 	}
 	ics.RepeatRuleApply = a.repeats
+	ics.MaxRepeats = a.maxrepeats
 
 	// Collect duplicate IDs before parsing inputs
 
